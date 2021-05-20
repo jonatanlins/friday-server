@@ -3,7 +3,7 @@ const axios = require("axios");
 const apiKey = process.env.TELEGRAM_API_KEY;
 
 const messageController = async (req, res) => {
-  const chatId = req.body.message.chat.id;
+  const chatId = req.params.message.chat.id;
 
   const response = "Oiii";
 
