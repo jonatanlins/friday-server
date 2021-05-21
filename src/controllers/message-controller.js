@@ -10,7 +10,7 @@ module.exports = {
   },
 
   async store(req, res) {
-    messages.push(req);
+    messages.push(req.body);
 
     // const chatId = req.body.message.chat.id;
 
