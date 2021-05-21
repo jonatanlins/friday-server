@@ -2,24 +2,30 @@ const axios = require("axios");
 
 const apiKey = process.env.TELEGRAM_API_KEY;
 
-let messages = [];
+const sendMessage = async (params) => {
+  return await axios.get(`https://api.telegram.org/bot${apiKey}/sendMessage`, { params });
+}
+
+const editMessageText =  async (params) => {
+  return await axios.get(`https://api.telegram.org/bot${apiKey}/editMessageText`, { params });
+}
 
 module.exports = {
   async index(req, res) {
-    res.status(200).json(messages);
+    res.status(200).json([]);
   },
 
   async store(req, res) {
-    messages.push(req.body);
+    const chat_id = req.body.message.chat.id;
+    const text = "Oiii";
+    // const reply_to_message_id = req.body.message.message_id
 
-    // const chatId = req.body.message.chat.id;
+    const sentMessage = await sendMessage({ chat_id, text: 'Oi' })
+    const sentMessageId = sentMessage.data.result.message_id
 
-    // const response = "Oiii";
 
-    // await axios.get(`https://api.telegram.org/bot${apiKey}/sendMessage`, {
-    //   params: { chat_id: chatId, text: response },
-    // });
+    await editMessageText({ chat_id, text: "Oii :D", message_id: sentMessageId })
 
-    res.status(200).json({ ok: true });
+    res.status(204).send();
   },
 };
